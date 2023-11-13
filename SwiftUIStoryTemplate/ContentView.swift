@@ -6,7 +6,7 @@ struct ContentView: View {
         TabView {
             Chapter1View()
                 .tabItem {
-                    Label("Chapter 1", systemImage: "1.circle")
+                    Label("Chapter One", systemImage: "1.circle")
                 }
             Chapter2View()
                 .tabItem {
