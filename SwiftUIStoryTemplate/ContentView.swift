@@ -23,24 +23,24 @@ var kingDead: Bool?
 
 struct ContentView: View {
     
-    @State var chapter1: Bool = true
+    @State var mainScreen: Bool = false
+    @State var genderScreen: Bool = false
+    @State var chapter1: Bool = false
     @State var chapter2: Bool = false
     @State var chapter3: Bool = false
-    @State var chapter4: Bool = false
+    @State var chapter4: Bool = true
     @State var endOfStory: Bool = false
-    @State var mainScreen: Bool = true
-    @State var genderScreen: Bool = false
     
     var body: some View {
         
         if mainScreen {
             MainScreenView(mainScreen: $mainScreen,genderScreen: $genderScreen)
         } else if genderScreen {
-            GenderView(genderScreen: $genderScreen)
+            GenderView(genderScreen: $genderScreen,continueChapter1: $chapter1)
         } else {
-            TabView {
+//            TabView {
 //                if chapter1 {
-                    Chapter1View(continueChapter2: $chapter2)
+                    Chapter1View(continueChapter1: $chapter1, continueChapter2: $chapter2)
                         .tabItem {
                             Label("Chapter 1", systemImage: "1.circle")
                         }
@@ -63,7 +63,7 @@ struct ContentView: View {
                             Label("Chapter 4", systemImage: "4.circle")
                         }
 //                }
-            }
+//            }
         }
     }
 }
@@ -130,7 +130,9 @@ struct GenderView: View{
     
     @State var username: String = mainCharacter.name
     @State var gender: [String] = mainCharacter.gender
+    
     @Binding var genderScreen: Bool
+    @Binding var continueChapter1: Bool
     
     var body: some View{
         ZStack{
@@ -197,6 +199,7 @@ struct GenderView: View{
                         mainCharacter.name = username
                         mainCharacter.gender = gender
                         genderScreen.toggle()
+                        continueChapter1.toggle()
                     } label:{
                         Text("Continue")
                         Image(systemName: "arrowshape.right.fill")

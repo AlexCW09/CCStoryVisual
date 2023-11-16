@@ -73,7 +73,7 @@ struct Chapter3Story {
 
 struct Chapter3View: View {
     
-    @State var intro3: Bool = true
+    @State var intro3: Bool = false
     @State var kingStays: Bool = false
     @State var kingGoes: Bool = false
     @State var letKingDie: Bool = false
@@ -150,9 +150,9 @@ struct Chapter3View: View {
         if letBoyGo{
             
         }
-        if !intro3 && !kingStays && !kingGoes && !letKingDie && !kingHealed && !kingDies && !momAlive && !momDead && !kingStayedIntro  && !kingDiedIntro && !kingHealed && !chaseBoy && !letBoyGo && !question1 && !question2 && !question3 && !question4{
-            Text("Summary")
-        }
+//        if !intro3 && !kingStays && !kingGoes && !letKingDie && !kingHealed && !kingDies && !momAlive && !momDead && !kingStayedIntro  && !kingDiedIntro && !kingHealed && !chaseBoy && !letBoyGo && !question1 && !question2 && !question3 && !question4{
+//            Text("Summary")
+//        }
         
     }
 }

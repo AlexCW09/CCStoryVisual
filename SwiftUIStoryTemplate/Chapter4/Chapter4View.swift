@@ -86,12 +86,15 @@ struct Chapter4Story {
 
 struct Chapter4View: View {
     
-    @State var intro4: Bool = false
+    let story4 = Chapter4Story()
+    
+//    @State var intro4: Bool = false
     @State var helpBoy: Bool = false
     @State var dontHelpBoy: Bool = false
-    @State var betrayParent: Bool = false
+    @State var betrayParent: Bool = true
     @State var calmDown: Bool = false
-    @State var forgiveMagicUsers: Bool = false
+    @State var goodCeremony: Bool = false
+    @State var badCeremony: Bool = false
     @State var poison: Bool = false
     @State var helpFamily: Bool = false
     @State var familyLives: Bool = false
@@ -108,54 +111,57 @@ struct Chapter4View: View {
     
     var body: some View {
         
-        if intro4{
-
+        if !continueChapter4{
+            ShowStory(textOfStory: story4.intro, heightOfScroll: 1350, chapter: 4,storyBool: $continueChapter4,questionBool: $question1)
         }
         if question1{
-            
+            OptionView(question: "Do you want to help the boy?", option1: "Help the boy", option2: "Do not interfere", background: "ruinedHouse", decision1: $helpBoy, decision2: $dontHelpBoy,questionBool: $question1)
         }
         if helpBoy{
-            
+            ShowStory(textOfStory: story4.helpBoy, heightOfScroll: 900, chapter: 4,storyBool: $helpBoy,questionBool: $question2)
         }
         if dontHelpBoy{
-            
+            ShowStory(textOfStory: story4.ignoreBoy, heightOfScroll: 850, chapter: 4,storyBool: $dontHelpBoy,questionBool: $question1)
         }
         if question2{
-            
+            OptionView(question: "Do you want to betray \(mainCharacter.parentalStatus())?", option1: "Betray them", option2: "Stay Calm", background: "ruinedHouse", decision1: $betrayParent, decision2: $calmDown,questionBool: $question2)
         }
         if betrayParent{
-            
+            ShowStory(textOfStory: story4.betrayParent, heightOfScroll: 850, chapter: 4,storyBool: $betrayParent,questionBool: $question1)
         }
         if calmDown{
-            
+            ShowStory(textOfStory: story4.calmDown, heightOfScroll: 1800, chapter: 4,storyBool: $calmDown,questionBool: $question1)
         }
-        if forgiveMagicUsers{
-            
+        if goodCeremony{
+            ShowStory(textOfStory: story4.goodCeremony, heightOfScroll: 1800, chapter: 4,storyBool: $goodCeremony,questionBool: $familyLives)
         }
-        if poison{
-            
+        if badCeremony{
+            ShowStory(textOfStory: story4.badCeremony, heightOfScroll: 1800, chapter: 4,storyBool: $badCeremony,questionBool: $familyDies)
         }
+//        if poison{
+//            ShowStory(textOfStory: story4.poison, heightOfScroll: 1800, chapter: 4,storyBool: $poison,questionBool: $question3)
+//        }
         if helpFamily{
-            
+            ShowStory(textOfStory: story4.healFamily, heightOfScroll: 1800, chapter: 4,storyBool: $helpBoy,questionBool: $question3)
         }
         if familyLives{
-            
+            ShowStory(textOfStory: story4.familyLives, heightOfScroll: 1800, chapter: 4,storyBool: $familyLives,questionBool: $question3)
         }
         if familyDies{
-            
+            ShowStory(textOfStory: story4.familyDead, heightOfScroll: 1800, chapter: 4,storyBool: $familyDies,questionBool: $question3)
         }
         if question3{
-            
+            OptionView(question: "Do you want to forgive the mages?", option1: "Forgive them", option2: "Seek Revenge", background: "ruinedHouse", decision1: $goodCeremony, decision2: $badEnding,questionBool: $question3)
         }
         if goodEnding{
-            
+            ShowStory(textOfStory: story4.goodEnding, heightOfScroll: 1800, chapter: 4,storyBool: $goodEnding,questionBool: $continueEnd)
         }
         if badEnding{
-            
+            ShowStory(textOfStory: story4.badEnding, heightOfScroll: 1800, chapter: 4,storyBool: $badEnding,questionBool: $continueEnd)
         }
-        if !intro4 && !helpBoy && !dontHelpBoy && !betrayParent && !calmDown && !forgiveMagicUsers && !poison && !helpFamily && !familyLives  && !familyDies && !goodEnding && !badEnding && !question1 && !question2 && !question3{
-            Text("Summary")
-        }
+//        if !intro4 && !helpBoy && !dontHelpBoy && !betrayParent && !calmDown && !poison && !helpFamily && !familyLives  && !familyDies && !goodEnding && !badEnding && !question1 && !question2 && !question3{
+//            Text("Summary")
+//        }
         
     }
 }

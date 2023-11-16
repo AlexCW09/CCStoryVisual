@@ -31,17 +31,18 @@ struct Chapter1View: View {
     
     let story1 = Chapter1Story()
     
-    @State var intro: Bool = true
+//    @State var intro: Bool = false
     @State var question1: Bool = false
     @State var stayInBed: Bool = false
     @State var LeaveBed: Bool = false
     
+    @Binding var continueChapter1: Bool
     @Binding var continueChapter2: Bool
     
     var body: some View {
         
-        if intro{
-            ShowStory(textOfStory: story1.IntroView1, heightOfScroll: 2100, chapter: 1,storyBool: $intro,questionBool: $question1)
+        if continueChapter1{
+            ShowStory(textOfStory: story1.IntroView1, heightOfScroll: 2100, chapter: 1,storyBool: $continueChapter1,questionBool: $question1)
         }
         if question1 {
             OptionView(question: "Do you want to leave your bed to adventure?", option1: "Leave the bed", option2: "Stay in bed", background: "MirrorBG", decision1: $LeaveBed, decision2: $stayInBed,questionBool: $question1)
@@ -52,9 +53,9 @@ struct Chapter1View: View {
         if stayInBed{
             ShowStory(textOfStory: story1.stayInBed, heightOfScroll: 800, chapter: 1,storyBool: $stayInBed,questionBool: $continueChapter2)
         }
-        if !intro && !question1 && !LeaveBed && !stayInBed{
-            Text("Summary")
-        }
+//        if !intro && !question1 && !LeaveBed && !stayInBed{
+//            Text("Summary")
+//        }
     }
 }
 
