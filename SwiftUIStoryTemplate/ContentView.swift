@@ -25,8 +25,6 @@ var mainCharacter = Character(name: "", gender: ["none","none"])
 
 struct ContentView: View {
     
-    var mainCharacter = Character(name: "", gender: ["none","none"])
-    
     @State var chapter1: Bool = true
     @State var chapter2: Bool = true
     @State var chapter3: Bool = false
@@ -193,6 +191,7 @@ struct MainScreenView: View {
 struct GenderView: View{
     
     @State var username: String = mainCharacter.name
+    @State var gender: [String] = mainCharacter.gender
     @Binding var genderScreen: Bool
     
     var body: some View{
@@ -216,7 +215,7 @@ struct GenderView: View{
                                 Spacer()
                                     .frame(width: geoProx2.size.width / 4)
                                 TextField("Name",text: $username)
-                                    .padding(5)
+                                    .padding(10)
                                     .background(.white.opacity(0.5))
                                     .clipShape(RoundedRectangle(cornerRadius: 15))
                                     .overlay(RoundedRectangle(cornerRadius: 15).stroke(.black))
@@ -228,17 +227,17 @@ struct GenderView: View{
                         }
                         Group{
                             Button{
-                                mainCharacter.gender = ["Prince","prince"]
+                                gender = ["Prince","prince"]
                             } label:{
                                 Text("Male")
                             }
                             Button{
-                                mainCharacter.gender = ["Princess","princess"]
+                                gender = ["Princess","princess"]
                             } label:{
                                 Text("Female")
                             }
                             Button{
-                                mainCharacter.gender = ["",""]
+                                gender = ["",""]
                             } label:{
                                 Text("Nonbinary")
                             }
@@ -257,6 +256,8 @@ struct GenderView: View{
                 HStack{
                     Spacer()
                     Button{
+                        mainCharacter.name = username
+                        mainCharacter.gender = gender
                         genderScreen.toggle()
                     } label:{
                         Text("Continue")
@@ -267,12 +268,12 @@ struct GenderView: View{
                     .background(.white.opacity(0.5))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .overlay(RoundedRectangle(cornerRadius: 15).stroke(.black))
-                    .disabled(mainCharacter.name.isEmpty || mainCharacter.gender[1] == "none")
+                    .disabled(username.isEmpty || gender[1] == "none")
                     .padding([.trailing],30)
                 }
-                .opacity((mainCharacter.name.isEmpty || mainCharacter.gender[1] == "none") ? 0.0 : 1.0)
+                .opacity((username.isEmpty || gender[1] == "none") ? 0.0 : 1.0)
             }
-            .font(.custom("Apple-Chancery", size: 25))
+            .font(.custom("Apple Chancery", size: 25))
             .fontWeight(.bold)
             .ignoresSafeArea(.keyboard)
         }
