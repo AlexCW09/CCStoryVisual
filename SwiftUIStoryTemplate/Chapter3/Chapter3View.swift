@@ -73,9 +73,11 @@ struct Chapter3Story {
 
 struct Chapter3View: View {
     
+
     let story3 = Chapter3Story()
     
-    @State var intro3: Bool = true
+    @State var intro3: Bool = false
+
     @State var kingStays: Bool = false
     @State var kingGoes: Bool = false
     @State var letKingDie: Bool = false
@@ -149,9 +151,9 @@ struct Chapter3View: View {
         if letBoyGo{
             ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
         }
-        if !intro3 && !kingStays && !kingGoes && !letKingDie && !kingHealed && !kingDies && !momAlive && !momDead && !kingStayedIntro  && !kingDiedIntro && !kingHealed && !chaseBoy && !letBoyGo && !question1 && !question2 && !question3 && !question4{
-            Text("Summary")
-        }
+//        if !intro3 && !kingStays && !kingGoes && !letKingDie && !kingHealed && !kingDies && !momAlive && !momDead && !kingStayedIntro  && !kingDiedIntro && !kingHealed && !chaseBoy && !letBoyGo && !question1 && !question2 && !question3 && !question4{
+//            Text("Summary")
+//        }
         
     }
 }
