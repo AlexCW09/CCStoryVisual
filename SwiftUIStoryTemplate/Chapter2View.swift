@@ -17,10 +17,14 @@ struct Chapter2View: View {
     @State var talkToOldMan: Bool = false
     @State var conclusion2: Bool = false
     
+    @Binding var continueChapter2: Bool
     @Binding var continueChapter3: Bool
     
     var body: some View {
         
+        if !continueChapter2 {
+            Text("Finish Chapter 1 to enter")
+        } else {
             if intro2{
                 ShowStory(textOfStory: whereAt(.intro), heightOfScroll: 1800, chapter: 2,storyBool: $intro2,questionBool: $question1)
             }
@@ -31,23 +35,24 @@ struct Chapter2View: View {
                 ShowStory(textOfStory: whereAt(.upstairs), heightOfScroll: 1800, chapter: 2,storyBool: $exploreUpstairs,questionBool: $conclusion2)
             }
             if exploreBaseFloor{
-                ShowStory(textOfStory: whereAt(.baseFloor), heightOfScroll: 1800, chapter: 2,storyBool: $exploreUpstairs,questionBool: $question2)
+                ShowStory(textOfStory: whereAt(.baseFloor), heightOfScroll: 1800, chapter: 2,storyBool: $exploreBaseFloor,questionBool: $question2)
             }
             if question2{
                 OptionView(question: "Do you want to attack or apprehend the old man?", option1: "Atack the old man", option2: "Apprehend the old man", background: "MirrorBG", decision1: $attackOldMan, decision2: $talkToOldMan,questionBool: $question2)
             }
             if attackOldMan{
-                ShowStory(textOfStory: whereAt(.killTheOldMan), heightOfScroll: 1800, chapter: 2,storyBool: $exploreUpstairs,questionBool: $conclusion2)
+                ShowStory(textOfStory: whereAt(.killTheOldMan), heightOfScroll: 1800, chapter: 2,storyBool: $attackOldMan,questionBool: $conclusion2)
             }
             if talkToOldMan{
-                ShowStory(textOfStory: whereAt(.apprehendTheOldMan), heightOfScroll: 1800, chapter: 2,storyBool: $exploreUpstairs,questionBool: $conclusion2)
+                ShowStory(textOfStory: whereAt(.apprehendTheOldMan), heightOfScroll: 1800, chapter: 2,storyBool: $talkToOldMan,questionBool: $conclusion2)
             }
             if conclusion2{
-                ShowStory(textOfStory: whereAt(.conclusion), heightOfScroll: 1800, chapter: 2,storyBool: $exploreUpstairs,questionBool: $continueChapter3)
+                ShowStory(textOfStory: whereAt(.conclusion), heightOfScroll: 1800, chapter: 2,storyBool: $conclusion2,questionBool: $continueChapter3)
             }
             if !intro2 && !question1 && !exploreUpstairs && !exploreBaseFloor && !question2 && !attackOldMan && !talkToOldMan && !conclusion2{
                 Text("Summary")
             }
+        }
     }
 }
 
