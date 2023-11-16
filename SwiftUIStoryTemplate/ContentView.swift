@@ -39,30 +39,30 @@ struct ContentView: View {
             GenderView(genderScreen: $genderScreen)
         } else {
             TabView {
-                if chapter1 {
+//                if chapter1 {
                     Chapter1View(continueChapter2: $chapter2)
                         .tabItem {
                             Label("Chapter 1", systemImage: "1.circle")
                         }
-                }
-                if chapter2 {
-                    Chapter2View(continueChapter3: $chapter3)
+//                }
+//                if chapter2 {
+                    Chapter2View(continueChapter2: $chapter2, continueChapter3: $chapter3)
                         .tabItem {
                             Label("Chapter 2", systemImage: "2.circle")
                         }
-                }
-                if chapter3 {
+//                }
+//                if chapter3 {
                     Chapter3View(continueChapter4: $chapter4)
                         .tabItem {
                             Label("Chapter 3", systemImage: "3.circle")
                         }
-                }
-                if chapter4 {
-                    Chapter4View(continueEnd: $endOfStory)
+//                }
+//                if chapter4 {
+                    Chapter4View(continueChapter4: $chapter4,continueEnd: $endOfStory)
                         .tabItem {
                             Label("Chapter 4", systemImage: "4.circle")
                         }
-                }
+//                }
             }
         }
     }

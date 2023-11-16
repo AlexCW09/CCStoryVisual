@@ -103,6 +103,7 @@ struct Chapter4View: View {
     @State var question2: Bool = false
     @State var question3: Bool = false
     
+    @Binding var continueChapter4: Bool
     @Binding var continueEnd: Bool
     
     var body: some View {
