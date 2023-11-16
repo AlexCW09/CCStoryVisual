@@ -94,13 +94,16 @@ struct Chapter3View: View {
     
     @Binding var continueChapter4: Bool
     
+    //king stays or leaves, // heal the king or not, //  attack the woman or disarm, // chase the boy or not
+    
     var body: some View {
         
         if intro3{
+            ShowStory(textOfStory: whereAtChapter3(.intro), heightOfScroll: 2100, chapter: 3, storyBool: $intro3, questionBool: $question1)
 
         }
         if question1{
-            
+            OptionView(question: "Do you want the king to accompany you?", option1: "King comes", option2: "King stays", background: "KingStaysOrLeaves", decision1: $kingGoes, decision2: $kingStays, questionBool: $question1)
         }
         if kingStays{
             
@@ -120,7 +123,7 @@ struct Chapter3View: View {
         if kingDies{
             
         }
-        if question4{
+        if question3{
             
         }
         if momAlive{
@@ -138,7 +141,7 @@ struct Chapter3View: View {
         if kingHealed{
             
         }
-        if question3{
+        if question4{
             
         }
         if chaseBoy{
