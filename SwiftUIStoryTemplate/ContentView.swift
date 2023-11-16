@@ -1,5 +1,26 @@
 import SwiftUI
+import UIKit
 //import Pages
+
+struct Character {
+    var name: String
+    var gender: [String]
+    /*func pStatusTitle()->String{
+        guard kingDead != nil else{
+            return "father"
+        }
+        return "mother"
+    }
+    func parentalStatus()->String{
+        guard kingDead != nil else{
+            return "King"
+        }
+        return "Queen"
+    }*/
+}
+var mainCharacter = Character(name: "", gender: [""])
+
+// Use the relevant folders and swift files to code your chapter of the story. Keep ContentView as-is, unless you want a different type of navigation in your story.
 
 struct ContentView: View {
     
@@ -52,28 +73,52 @@ struct JustifiedText: UIViewRepresentable {
   private let text: String
   private let font: UIFont
 
-  init(_ text: String, font: UIFont = .systemFont(ofSize: 18)) {
-    self.text = text
-    self.font = font
-  }
-
-  func makeUIView(context: Context) -> UITextView {
-    let textView = UITextView()
-    textView.font = font
-    textView.textAlignment = .justified
-    return textView
-  }
-
-  func updateUIView(_ uiView: UITextView, context: Context) {
-    uiView.text = text
-  }
-}
-
-
 
 
 #Preview {
     ContentView()
+}
+
+//Display Content
+struct ShowStory: View {
+    var chapter: Int = 1
+    var textOfStory: String = "Test"
+    var decision: UserDecision = UserDecision()
+    var body: some View {
+        VStack {
+            Spacer()
+            Text("Chapter \(chapter)")
+                //.font(.custom("Apple Chancery", size: 30))
+                .font(.largeTitle)
+                .bold()
+            
+            ScrollView {
+                Text(textOfStory)
+                    .padding(25)
+                
+                decision
+                
+            }
+            .font(.custom("Apple Chancery", size: 20))
+        }
+    }
+}
+
+// <<<<<<< lovingj
+// //Decision
+// struct UserDecision: View {
+//     var question: String = ""
+//     var decisions: [String] = []
+//     var body: some View {
+//         Text(question)
+//             .font(.title3)
+//     }
+// =======
+
+
+#Preview {
+    ContentView()
+
 }
 
 // Universal Views
