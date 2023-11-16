@@ -54,7 +54,7 @@ func whereAtChapter3(_ location: Chapter3StoryOutline) -> Text
     }
 }
 struct Chapter3Story {
-    let intro: Text = Text("The sun hung low in the sky, casting long shadows as \(mainCharacter.name) made their way to the kingdom's headquarters, summoned by the formidable figure of King, \(mainCharacter.name)'s father. Tension hung in the air, and as \(mainCharacter.name) entered the grand chamber, they couldn't help but feel the intensity of the moment. Seated on a grand throne, the king gazed at \(mainCharacter.name) with a mixture of concern and resolve. With a commanding voice, he declared, \(mainCharacter.name), you shall embark on a quest to slay a dangerous magic user in a nearby village. \(mainCharacter.name)'s heart raced at the thought of this perilous task, but an undercurrent of excitement surged through them. They had never encountered a magic user before, and the prospect of such a journey filled them with a unique kind of anticipation. The king leaned forward and posed a question, \"Do you want my company on this mission? It would be our first adventure together, and I would be honored to be by your side.\" Do you want the king to accompany you?\n1. King comes\n2. King stay")
+    let intro: Text = Text("The sun hung low in the sky, casting long shadows as \(mainCharacter.name) made their way to the kingdom's headquarters, summoned by the formidable figure of King, \(mainCharacter.name)'s father. Tension hung in the air, and as \(mainCharacter.name) entered the grand chamber, they couldn't help but feel the intensity of the moment. Seated on a grand throne, the king gazed at \(mainCharacter.name) with a mixture of concern and resolve. With a commanding voice, he declared, \(mainCharacter.name), you shall embark on a quest to slay a dangerous magic user in a nearby village. \(mainCharacter.name)'s heart raced at the thought of this perilous task, but an undercurrent of excitement surged through them. They had never encountered a magic user before, and the prospect of such a journey filled them with a unique kind of anticipation. The king leaned forward and posed a question, \"Do you want my company on this mission? It would be our first adventure together, and I would be honored to be by your side.\" Do you want the king to accompany you?\n")
     let declinesKing: Text = Text("They nodded with determination, feeling a sense of responsibility to protect their father. As they and the others set out of the kingdom, villagers watched in curiosity, wondering why so many guards were leaving. Upon arriving at the village, the local leader confronted them, perplexed by the presence of guards and \(mainCharacter.name). It was only after a tense exchange that \(mainCharacter.name) explained the purpose of their visit, citing an alert about a magic user. The leader's disbelief quickly turned into hesitation, and he refused to comply with \(mainCharacter.name)'s request to gather the villagers for a magic test. \(mainCharacter.name), taking a more serious tone, placed a hand on their sword, pushing the leader to react defensively. He unsheathed his own blade, igniting a feud between the kingdom's people and the villagers. \(mainCharacter.name), their sword in hand, lunged at the leader, meeting unexpected resistance. Yet, in the end, \(mainCharacter.name) emerged victorious. The aftermath was grim. \(mainCharacter.name) explored the ruined village, searching for the elusive magic user until they came upon a house. Inside, a frightened boy cried for his parents' return. Y/N cautiously approached the child, their sword at the ready, but hesitated. As they stood at an impasse, a woman suddenly emerged from behind, attempting to strike \(mainCharacter.name). Do you want to attack the women or disarm her?\n1. Attack her\n2. Disarm her")
     let stabsMom: Text = Text("The boy's cries for his lifeless mother pierced the air, and \(mainCharacter.name) realized the tragedy they had caused before the boy's eyes. As \(mainCharacter.name) continued their quest to locate the magic user, the boy glared at them with burning rage, his innocent eyes turning into malevolent, glowing red orbs. The village was left in chaos, with casualties on both sides.")
     let knocksOutMom: Text = Text("The boy's tears for his unconscious mother echoed through the room, and Y/N comprehended the gravity of their actions in front of the child. As \(mainCharacter.name) left to search for the elusive magic user, the boy watched them with a mix of anger and sorrow, his eyes shifting from glowing blue to a deep, ominous red. The village lay in ruins, with casualties on both sides.")
@@ -73,7 +73,11 @@ struct Chapter3Story {
 
 struct Chapter3View: View {
     
+
+    let story3 = Chapter3Story()
+    
     @State var intro3: Bool = false
+
     @State var kingStays: Bool = false
     @State var kingGoes: Bool = false
     @State var letKingDie: Bool = false
@@ -99,56 +103,53 @@ struct Chapter3View: View {
     var body: some View {
         
         if intro3{
-            ShowStory(textOfStory: whereAtChapter3(.intro), heightOfScroll: 2100, chapter: 3, storyBool: $intro3, questionBool: $question1)
+            ShowStory(textOfStory: whereAtChapter3(.intro), heightOfScroll: 850, chapter: 3, storyBool: $intro3, questionBool: $question1)
 
         }
         if question1{
             OptionView(question: "Do you want the king to accompany you?", option1: "King comes", option2: "King stays", background: "KingStaysOrLeaves", decision1: $kingGoes, decision2: $kingStays, questionBool: $question1)
         }
         if kingStays{
-            
+            ShowStory(textOfStory: story3.declinesKing, heightOfScroll: 2100, chapter: 3, storyBool: $kingStays, questionBool: $question3)
+        }
+        if question3{
+            OptionView(question: "Do you want to attack the women or disarm her?", option1: "Attack her", option2: "Disarm her", background: "AttackWoman", decision1: $momDead, decision2: $momAlive, questionBool: $question3)
+        }
+        if momDead{
+            ShowStory(textOfStory: story3.stabsMom, heightOfScroll: 1000, chapter: 3, storyBool: $momDead, questionBool: $kingStayedIntro)
+        }
+        if momAlive{
+            ShowStory(textOfStory: story3.knocksOutMom, heightOfScroll: 1000, chapter: 3, storyBool: $momAlive, questionBool: $kingStayedIntro)
+        }
+        if kingStayedIntro{
+            ShowStory(textOfStory: story3.kingStayedIntro, heightOfScroll: 1000, chapter: 3, storyBool: $kingStayedIntro, questionBool: $question2)
         }
         if kingGoes{
-            
+            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
         }
         if question2{
-            
+            OptionView(question: "Do you want to heal the king?", option1: "Heal the king", option2: "Let the king die", background: <#T##String#>, decision1: <#T##Binding<Bool>#>, decision2: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
         }
         if letKingDie{
-            
+            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
         }
-        if kingHealed{
+        if kingDiedIntro{
             
         }
         if kingDies{
             
         }
-        if question3{
-            
-        }
-        if momAlive{
-            
-        }
-        if momDead{
-            
-        }
-        if kingStayedIntro{
-            
-        }
-        if kingDiedIntro{
-            
-        }
         if kingHealed{
-            
+            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
         }
         if question4{
-            
+            OptionView(question: <#T##String#>, option1: <#T##String#>, option2: <#T##String#>, background: <#T##String#>, decision1: <#T##Binding<Bool>#>, decision2: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
         }
         if chaseBoy{
-            
+            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
         }
         if letBoyGo{
-            
+            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
         }
 //        if !intro3 && !kingStays && !kingGoes && !letKingDie && !kingHealed && !kingDies && !momAlive && !momDead && !kingStayedIntro  && !kingDiedIntro && !kingHealed && !chaseBoy && !letBoyGo && !question1 && !question2 && !question3 && !question4{
 //            Text("Summary")
