@@ -165,12 +165,12 @@ struct GenderView: View{
                         }
                         Group{
                             Button{
-                                gender = ["Prince ","prince "]
+                                gender = ["Prince ","Prince "]
                             } label:{
                                 Text("Male")
                             }
                             Button{
-                                gender = ["Princess ","princess "]
+                                gender = ["Princess ","Princess "]
                             } label:{
                                 Text("Female")
                             }
