@@ -1,11 +1,10 @@
 import SwiftUI
 import UIKit
-//import Pages
 
 struct Character {
     var name: String
     var gender: [String]
-    /*func pStatusTitle()->String{
+    func pStatusTitle()->String{
         guard kingDead != nil else{
             return "father"
         }
@@ -16,19 +15,19 @@ struct Character {
             return "King"
         }
         return "Queen"
-    }*/
+    }
 }
 
 var mainCharacter = Character(name: "", gender: ["none","none"])
-
-// Use the relevant folders and swift files to code your chapter of the story. Keep ContentView as-is, unless you want a different type of navigation in your story.
+var kingDead: Bool?
 
 struct ContentView: View {
     
     @State var chapter1: Bool = true
-    @State var chapter2: Bool = true
+    @State var chapter2: Bool = false
     @State var chapter3: Bool = false
     @State var chapter4: Bool = false
+    @State var endOfStory: Bool = false
     @State var mainScreen: Bool = true
     @State var genderScreen: Bool = false
     
@@ -41,25 +40,25 @@ struct ContentView: View {
         } else {
             TabView {
                 if chapter1 {
-                    Chapter1View()
+                    Chapter1View(continueChapter2: $chapter2)
                         .tabItem {
                             Label("Chapter 1", systemImage: "1.circle")
                         }
                 }
                 if chapter2 {
-                    Chapter2View()
+                    Chapter2View(continueChapter3: $chapter3)
                         .tabItem {
                             Label("Chapter 2", systemImage: "2.circle")
                         }
                 }
                 if chapter3 {
-                    Chapter3View()
+                    Chapter3View(continueChapter4: $chapter4)
                         .tabItem {
                             Label("Chapter 3", systemImage: "3.circle")
                         }
                 }
                 if chapter4 {
-                    Chapter4View()
+                    Chapter4View(continueEnd: $endOfStory)
                         .tabItem {
                             Label("Chapter 4", systemImage: "4.circle")
                         }
@@ -69,58 +68,8 @@ struct ContentView: View {
     }
 }
 
-
-//struct JustifiedText: UIViewRepresentable {
-//  private let text: String
-//  private let font: UIFont
-//}
-
-
-
 #Preview {
     ContentView()
-}
-
-//Display Content
-struct ShowStory: View {
-    var chapter: Int = 1
-    var textOfStory: String = "Test"
-//    var decision: UserDecision = UserDecision()
-    var body: some View {
-        VStack {
-            Spacer()
-            Text("Chapter \(chapter)")
-                //.font(.custom("Apple Chancery", size: 30))
-                .font(.largeTitle)
-                .bold()
-            
-            ScrollView {
-                Text(textOfStory)
-                    .padding(25)
-                
-//                decision
-                
-            }
-            .font(.custom("Apple Chancery", size: 20))
-        }
-    }
-}
-
-// <<<<<<< lovingj
-// //Decision
-// struct UserDecision: View {
-//     var question: String = ""
-//     var decisions: [String] = []
-//     var body: some View {
-//         Text(question)
-//             .font(.title3)
-//     }
-// =======
-
-
-#Preview {
-    ContentView()
-
 }
 
 // Universal Views
@@ -148,20 +97,9 @@ struct MainScreenView: View {
                         Image("StartButton")
                             .resizable()
                     }
-                    Button{
-                        
-                    } label:{
-                        Image("RestartButton")
-                            .resizable()
-                    }
-                    Button{
-                        
-                    } label:{
-                        Image("SummaryButton")
-                            .resizable()
-                    }
                 }
                 .frame(width:280,height:85)
+                Spacer()
                 Group{
                     HStack{
                         Spacer()
@@ -227,12 +165,12 @@ struct GenderView: View{
                         }
                         Group{
                             Button{
-                                gender = ["Prince","prince"]
+                                gender = ["Prince ","prince "]
                             } label:{
                                 Text("Male")
                             }
                             Button{
-                                gender = ["Princess","princess"]
+                                gender = ["Princess ","princess "]
                             } label:{
                                 Text("Female")
                             }
@@ -282,10 +220,13 @@ struct GenderView: View{
 
 struct OptionView: View{
     
-    @State var statement: String
+    @State var question: String
     @State var option1: String
     @State var option2: String
     @State var background: String
+    @Binding var decision1: Bool
+    @Binding var decision2: Bool
+    @Binding var questionBool: Bool
     
     var body: some View{
         
@@ -300,7 +241,7 @@ struct OptionView: View{
                 VStack{
                     Spacer()
                         .frame(height: geoProx1.size.height / 3)
-                    Text(statement)
+                    Text(question)
                         .padding(20)
                         .frame(width: geoProx1.size.width / 1.125)
                         .fixedSize(horizontal: false, vertical: true)
@@ -309,13 +250,14 @@ struct OptionView: View{
                         .fontWeight(.bold)
                         .multilineTextAlignment(.center)
                     Spacer()
-                        .frame(height: geoProx1.size.height / 3.1)
+                        .frame(height: geoProx1.size.height / 4)
                     GeometryReader { geoProx2 in
                         HStack{
                             Spacer()
                             Group{
                                 Button{
-                                    
+                                    questionBool.toggle()
+                                    decision1.toggle()
                                 } label:{
                                     Text(option1)
                                         .frame(width: geoProx2.size.width / 2.3, height: geoProx2.size.width / 4)
@@ -326,7 +268,8 @@ struct OptionView: View{
                                         .overlay(RoundedRectangle(cornerRadius: 15).stroke(.black))
                                 }
                                 Button{
-                                    
+                                    questionBool.toggle()
+                                    decision2.toggle()
                                 } label:{
                                     Text(option2)
                                         .frame(width: geoProx2.size.width / 2.3, height: geoProx2.size.width / 4)
@@ -346,6 +289,57 @@ struct OptionView: View{
     }
 }
 
-//#Preview {
-//    GenderView()
-//}
+struct ShowStory: View{
+    
+    @State var textOfStory: Text
+    @State var heightOfScroll: CGFloat
+    @State var chapter: Int
+    @Binding var storyBool: Bool
+    @Binding var questionBool: Bool
+    
+    var body: some View{
+        
+        ZStack {
+            Image("OldMap")
+                .ignoresSafeArea()
+            VStack {
+                VStack{
+                    ZStack{
+                        Group{
+                            Image("ChapterBanner")
+                                .resizable()
+                                .frame(width: 400, height: 100)
+                            Text("Chapter \(chapter)")
+                                .font(.largeTitle)
+                                .bold()
+                                .offset(y:10)
+                        }
+                        .offset(y: 120)
+                    }
+                }
+                    .padding([.bottom],110)
+                ScrollView {
+                    Group{
+                        Image("Paper")
+                            .resizable()
+                            .frame(width: 420, height: heightOfScroll)
+                            .padding(.top)
+                            .overlay(textOfStory.padding(50))
+                            Button {
+                                questionBool.toggle()
+                                storyBool.toggle()
+                            } label: {
+                                Image("ContinueButton")
+                                    .resizable()
+                                    .frame(width: 80,height: 80)
+                            }
+                        .offset(x:140,y:-200)
+                    }
+                    .frame(width: 420,height: heightOfScroll)
+                    .offset(y:-80)
+                }
+            }
+            .background(.blue.opacity(0.2))
+        }
+    }
+}
