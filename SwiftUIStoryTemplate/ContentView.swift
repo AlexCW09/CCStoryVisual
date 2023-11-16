@@ -18,11 +18,14 @@ struct Character {
         return "Queen"
     }*/
 }
-var mainCharacter = Character(name: "", gender: [""])
+
+var mainCharacter = Character(name: "", gender: ["none","none"])
 
 // Use the relevant folders and swift files to code your chapter of the story. Keep ContentView as-is, unless you want a different type of navigation in your story.
 
 struct ContentView: View {
+    
+    var mainCharacter = Character(name: "", gender: ["none","none"])
     
     @State var chapter1: Bool = true
     @State var chapter2: Bool = true
@@ -69,9 +72,10 @@ struct ContentView: View {
 }
 
 
-struct JustifiedText: UIViewRepresentable {
-  private let text: String
-  private let font: UIFont
+//struct JustifiedText: UIViewRepresentable {
+//  private let text: String
+//  private let font: UIFont
+//}
 
 
 
@@ -83,7 +87,7 @@ struct JustifiedText: UIViewRepresentable {
 struct ShowStory: View {
     var chapter: Int = 1
     var textOfStory: String = "Test"
-    var decision: UserDecision = UserDecision()
+//    var decision: UserDecision = UserDecision()
     var body: some View {
         VStack {
             Spacer()
@@ -96,7 +100,7 @@ struct ShowStory: View {
                 Text(textOfStory)
                     .padding(25)
                 
-                decision
+//                decision
                 
             }
             .font(.custom("Apple Chancery", size: 20))
@@ -188,8 +192,7 @@ struct MainScreenView: View {
 
 struct GenderView: View{
     
-    @State var username: String = ""
-    @State var gender: String = "none"
+    @State var username: String = mainCharacter.name
     @Binding var genderScreen: Bool
     
     var body: some View{
@@ -225,17 +228,17 @@ struct GenderView: View{
                         }
                         Group{
                             Button{
-                                gender = "Male"
+                                mainCharacter.gender = ["Prince","prince"]
                             } label:{
                                 Text("Male")
                             }
                             Button{
-                                gender = "Female"
+                                mainCharacter.gender = ["Princess","princess"]
                             } label:{
                                 Text("Female")
                             }
                             Button{
-                                gender = ""
+                                mainCharacter.gender = ["",""]
                             } label:{
                                 Text("Nonbinary")
                             }
@@ -264,10 +267,10 @@ struct GenderView: View{
                     .background(.white.opacity(0.5))
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                     .overlay(RoundedRectangle(cornerRadius: 15).stroke(.black))
-                    .disabled(username.isEmpty || gender=="none")
+                    .disabled(mainCharacter.name.isEmpty || mainCharacter.gender[1] == "none")
                     .padding([.trailing],30)
                 }
-                .opacity((username.isEmpty || gender == "none") ? 0.0 : 1.0)
+                .opacity((mainCharacter.name.isEmpty || mainCharacter.gender[1] == "none") ? 0.0 : 1.0)
             }
             .font(.custom("Apple-Chancery", size: 25))
             .fontWeight(.bold)

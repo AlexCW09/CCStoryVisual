@@ -8,7 +8,7 @@ let story: Chapter2Story = Chapter2Story()
 
 struct Chapter2View: View {
     var body: some View {
-        ShowStory(chapter: 2, textOfStory: whereAt(.intro), decision: UserDecision(question: "Testing?"))
+        ShowStory(chapter: 2, textOfStory: whereAt(.intro)/*, decision: UserDecision(question: "Testing?")*/)
     }
 }
 enum Place
