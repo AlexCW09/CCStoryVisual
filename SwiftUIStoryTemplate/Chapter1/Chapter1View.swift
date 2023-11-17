@@ -31,10 +31,10 @@ struct Chapter1View: View {
     
     let story1 = Chapter1Story()
     
-//    @State var intro: Bool = false
     @State var question1: Bool = false
     @State var stayInBed: Bool = false
-    @State var LeaveBed: Bool = false
+    @State var leaveBed: Bool = false
+    @State var libraryImage: Bool = false
     
     @Binding var continueChapter1: Bool
     @Binding var continueChapter2: Bool
@@ -45,17 +45,17 @@ struct Chapter1View: View {
             ShowStory(textOfStory: story1.IntroView1, heightOfScroll: 2100, chapter: 1,storyBool: $continueChapter1,questionBool: $question1)
         }
         if question1 {
-            OptionView(question: "Do you want to leave your bed to adventure?", option1: "Leave the bed", option2: "Stay in bed", background: "MirrorBG", decision1: $LeaveBed, decision2: $stayInBed,questionBool: $question1)
+            OptionView(question: "Do you want to leave your bed to adventure?", option1: "Leave the bed", option2: "Stay in bed", background: "Bedroom", decision1: $leaveBed, decision2: $stayInBed,questionBool: $question1)
         }
-        if LeaveBed{
-            ShowStory(textOfStory: story1.leaveBed, heightOfScroll: 1200, chapter: 1,storyBool: $LeaveBed,questionBool: $continueChapter2)
+        if leaveBed{
+            ShowStory(textOfStory: story1.leaveBed, heightOfScroll: 1200, chapter: 1,storyBool: $leaveBed,questionBool: $libraryImage)
         }
         if stayInBed{
-            ShowStory(textOfStory: story1.stayInBed, heightOfScroll: 800, chapter: 1,storyBool: $stayInBed,questionBool: $continueChapter2)
+            ShowStory(textOfStory: story1.stayInBed, heightOfScroll: 800, chapter: 1,storyBool: $stayInBed,questionBool: $libraryImage)
         }
-//        if !intro && !question1 && !LeaveBed && !stayInBed{
-//            Text("Summary")
-//        }
+        if libraryImage{
+            ImageView(background: "Library",statement: "",pictureBool: $libraryImage,storyBool: $continueChapter2)
+        }
     }
 }
 
@@ -67,6 +67,8 @@ struct Chapter1Story{
     let stayInBed: Text = Text("\(mainCharacter.gender[1])\(mainCharacter.name) decided to stay in their bed and let the mysterious events of the night pass without further involvement. The events beyond their chamber remained shrouded in obscurity, and the desire for a peaceful night's sleep outweighed their \(characterEmotion(emotion: .amazement)[2]).\nUnder the gentle watch of the full moon, \(mainCharacter.name) drifted into slumber, leaving the enigmatic occurrences of the night to the realm of dreams and the mysteries of the morrow.\n")
 }
 
-//#Preview {
-//    Chapter1View(continueChapter2: false)
-//}
+struct Chapter1Summary: View{
+    var body: some View{
+        Text("Summary")
+    }
+}

@@ -23,12 +23,14 @@ var kingDead: Bool?
 
 struct ContentView: View {
     
-    @State var mainScreen: Bool = false
+    @State var arsenal: String = ""
+    
+    @State var mainScreen: Bool = true
     @State var genderScreen: Bool = false
     @State var chapter1: Bool = false
     @State var chapter2: Bool = false
     @State var chapter3: Bool = false
-    @State var chapter4: Bool = true
+    @State var chapter4: Bool = false
     @State var endOfStory: Bool = false
     
     var body: some View {
@@ -38,32 +40,26 @@ struct ContentView: View {
         } else if genderScreen {
             GenderView(genderScreen: $genderScreen,continueChapter1: $chapter1)
         } else {
-//            TabView {
-//                if chapter1 {
-                    Chapter1View(continueChapter1: $chapter1, continueChapter2: $chapter2)
-                        .tabItem {
-                            Label("Chapter 1", systemImage: "1.circle")
-                        }
-//                }
-//                if chapter2 {
-                    Chapter2View(continueChapter2: $chapter2, continueChapter3: $chapter3)
-                        .tabItem {
-                            Label("Chapter 2", systemImage: "2.circle")
-                        }
-//                }
-//                if chapter3 {
-                    Chapter3View(continueChapter3: $chapter3, continueChapter4: $chapter4)
-                        .tabItem {
-                            Label("Chapter 3", systemImage: "3.circle")
-                        }
-//                }
-//                if chapter4 {
-                    Chapter4View(continueChapter4: $chapter4,continueEnd: $endOfStory)
-                        .tabItem {
-                            Label("Chapter 4", systemImage: "4.circle")
-                        }
-//                }
-//            }
+            if !endOfStory{
+                Chapter1View(continueChapter1: $chapter1, continueChapter2: $chapter2)
+                    .tabItem {
+                        Label("Chapter 1", systemImage: "1.circle")
+                    }
+                Chapter2View(continueChapter2: $chapter2, continueChapter3: $chapter3,arsenal: $arsenal)
+                    .tabItem {
+                        Label("Chapter 2", systemImage: "2.circle")
+                    }
+                Chapter3View(continueChapter3: $chapter3, continueChapter4: $chapter4)
+                    .tabItem {
+                        Label("Chapter 3", systemImage: "3.circle")
+                    }
+                Chapter4View(continueChapter4: $chapter4,continueEnd: $endOfStory)
+                    .tabItem {
+                        Label("Chapter 4", systemImage: "4.circle")
+                    }
+            } else {
+                ImageView(background: "Campfire",statement: "Retell the story?",pictureBool: $endOfStory,storyBool: $mainScreen)
+            }
         }
     }
 }
@@ -343,6 +339,36 @@ struct ShowStory: View{
                 }
             }
             .background(.blue.opacity(0.2))
+        }
+    }
+}
+
+struct ImageView: View{
+    
+    @State var background: String
+    @State var statement: String
+    
+    @Binding var pictureBool: Bool
+    @Binding var storyBool: Bool
+    
+    var body: some View{
+        ZStack{
+        Image(background)
+            .resizable()
+            .ignoresSafeArea()
+            Text(statement)
+                .font(.largeTitle)
+                .foregroundStyle(.white)
+                .offset(y:-300)
+            Button{
+                pictureBool.toggle()
+                storyBool.toggle()
+            } label: {
+                Image("ContinueButton")
+                    .resizable()
+                    .frame(width: 80, height: 80)
+            }
+            .offset(x:120,y:340)
         }
     }
 }

@@ -4,11 +4,9 @@ import UIKit
 let dayOfTheWeek: [String] = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 let day = dayOfTheWeek.randomElement() ?? "Sunday"
 let story: Chapter2Story = Chapter2Story()
-//var showStory = ShowStory(chapter: 2, textOfStory: whereAt(.intro))
 
 struct Chapter2View: View {
     
-//    @State var intro2: Bool = false
     @State var question1: Bool = false
     @State var exploreUpstairs = false
     @State var exploreBaseFloor: Bool = false
@@ -16,43 +14,42 @@ struct Chapter2View: View {
     @State var attackOldMan: Bool = false
     @State var talkToOldMan: Bool = false
     @State var conclusion2: Bool = false
+    @State var burningHouseImage: Bool = false
     
     @Binding var continueChapter2: Bool
     @Binding var continueChapter3: Bool
     
+    @Binding var arsenal: String
+    
     var body: some View {
         
-//        if !continueChapter2 {
-//            Text("Finish Chapter 1 to enter")
-//        } else {
-            if continueChapter2{
-                ShowStory(textOfStory: whereAt(.intro), heightOfScroll: 1800, chapter: 2,storyBool: $continueChapter2,questionBool: $question1)
-            }
-            if question1{
-                OptionView(question: "Do you want to explore the base floor or up?", option1: "Explore Upstairs", option2: "Explore base floor", background: "ruinedHouse", decision1: $exploreUpstairs, decision2: $exploreBaseFloor,questionBool: $question1)
-            }
-            if exploreUpstairs{
-                ShowStory(textOfStory: whereAt(.upstairs), heightOfScroll: 1150, chapter: 2,storyBool: $exploreUpstairs,questionBool: $conclusion2)
-            }
-            if exploreBaseFloor{
-                ShowStory(textOfStory: whereAt(.baseFloor), heightOfScroll: 1200, chapter: 2,storyBool: $exploreBaseFloor,questionBool: $question2)
-            }
-            if question2{
-                OptionView(question: "Do you want to attack or apprehend the old man?", option1: "Atack the old man", option2: "Apprehend the old man", background: "oldManHallway", decision1: $attackOldMan, decision2: $talkToOldMan,questionBool: $question2)
-            }
-            if attackOldMan{
-                ShowStory(textOfStory: whereAt(.killTheOldMan), heightOfScroll: 1200, chapter: 2,storyBool: $attackOldMan,questionBool: $conclusion2)
-            }
-            if talkToOldMan{
-                ShowStory(textOfStory: whereAt(.apprehendTheOldMan), heightOfScroll: 1250, chapter: 2,storyBool: $talkToOldMan,questionBool: $conclusion2)
-            }
-            if conclusion2{
-                ShowStory(textOfStory: whereAt(.conclusion), heightOfScroll: 1100, chapter: 2,storyBool: $conclusion2,questionBool: $continueChapter3)
-            }
-//            if !intro2 && !question1 && !exploreUpstairs && !exploreBaseFloor && !question2 && !attackOldMan && !talkToOldMan && !conclusion2{
-//                Text("Summary")
-//            }
-//        }
+        if continueChapter2{
+            ShowStory(textOfStory: whereAt(.intro), heightOfScroll: 2000, chapter: 2,storyBool: $continueChapter2,questionBool: $question1)
+        }
+        if question1{
+            OptionView(question: "Do you want to explore the base floor or up?", option1: "Explore Upstairs", option2: "Explore base floor", background: "ruinedHouse", decision1: $exploreUpstairs, decision2: $exploreBaseFloor,questionBool: $question1)
+        }
+        if exploreUpstairs{
+            ShowStory(textOfStory: whereAt(.upstairs), heightOfScroll: 1150, chapter: 2,storyBool: $exploreUpstairs,questionBool: $conclusion2)
+        }
+        if exploreBaseFloor{
+            ShowStory(textOfStory: whereAt(.baseFloor), heightOfScroll: 1200, chapter: 2,storyBool: $exploreBaseFloor,questionBool: $question2)
+        }
+        if question2{
+            OptionView(question: "Do you want to attack or apprehend the old man?", option1: "Atack the old man", option2: "Apprehend the old man", background: "oldManHallway", decision1: $attackOldMan, decision2: $talkToOldMan,questionBool: $question2)
+        }
+        if attackOldMan{
+            ShowStory(textOfStory: whereAt(.killTheOldMan), heightOfScroll: 1200, chapter: 2,storyBool: $attackOldMan,questionBool: $conclusion2)
+        }
+        if talkToOldMan{
+            ShowStory(textOfStory: whereAt(.apprehendTheOldMan), heightOfScroll: 1250, chapter: 2,storyBool: $talkToOldMan,questionBool: $conclusion2)
+        }
+        if conclusion2{
+            ShowStory(textOfStory: whereAt(.conclusion), heightOfScroll: 1500, chapter: 2,storyBool: $conclusion2,questionBool: $burningHouseImage)
+        }
+        if burningHouseImage{
+            ImageView(background: "BurningHouse",statement: "",pictureBool: $burningHouseImage,storyBool: $continueChapter3)
+        }
     }
 }
 
@@ -76,20 +73,18 @@ func whereAt(_ location: StoryOutline) -> Text
     
     switch location
     {
-        case .intro:
-            return story.intro
-        case .upstairs:
-            return story.upstairs
-        case .baseFloor:
-            return story.baseFloor
-        case .killTheOldMan:
-            return story.killTheOldMan
-        case .apprehendTheOldMan:
-            return story.apprehendTheOldMan
-        case .conclusion:
-            return story.conclusion
-//        default:
-//            return Text("")
+    case .intro:
+        return story.intro
+    case .upstairs:
+        return story.upstairs
+    case .baseFloor:
+        return story.baseFloor
+    case .killTheOldMan:
+        return story.killTheOldMan
+    case .apprehendTheOldMan:
+        return story.apprehendTheOldMan
+    case .conclusion:
+        return story.conclusion
     }
 }
 
@@ -113,22 +108,22 @@ Just as they were about to grasp the doorknob, a voice erupted from behind. An e
 
 "Before \(mainCharacter.name) could react, a bolt of lightning, conjured from the old man's will, struck them down. As they knelt on the ground, struggling to comprehend the strange turn of events, it became evident that the old man was a wielder of magic, a force beyond the ordinary. He kept muttering, \"they're wrong, THEY ARE WRONG,\" each word a cryptic puzzle. \(mainCharacter.name), their curiosity undeterred even in the face of danger, tried to get the old man to explain his cryptic words, but the elderly wizard's madness seemed to envelop him more with each passing moment, like a tempest spiraling into the unknown.
 """)
-
+    
     let upstairs: Text = Text("""
 With curiosity as their guiding star, \(mainCharacter.name) decided to ascend the creaking staircase, their heart pounding in anticipation. Each step seemed to echo with the whispers of centuries gone by. As they reached the upper floor, an ethereal, cerulean light gently spilled out from the last room, bathing the corridor in an otherworldly glow. \(mainCharacter.name) couldn't resist the pull of the light, and when they entered the room, a breathtaking sight awaited them. In the center of the room, a radiant, luminescent rock was suspended in mid-air, connected to the delicate branches of young, growing saplings. It was an enchanting tableau of life and rejuvenation. As \(mainCharacter.name) approached, they witnessed the miracle unfolding before them – with every passing moment, the dying trees surrounding the rock were slowly but surely being healed.
 
 Eyes wide with wonder, \(mainCharacter.name) reached out a hand to touch the tree closest to them. As their fingers brushed against the bark, a profound sensation coursed through their veins. The cut on their hand, a scar from a previous adventure, began to mend itself, disappearing before their eyes. The rock was a conduit for life's magic, a source of immeasurable power. Without hesitation, \(mainCharacter.name) grasped the glowing treasure, an irrefutable belief surging through them that this artifact held the answer to the enigmatic ruckus that had plagued the village for so long.
 """)
-
-     let killTheOldMan: Text = Text("""
+    
+    let killTheOldMan: Text = Text("""
 With an unyielding resolve, \(mainCharacter.name) lunged toward the old man, the desire to end the chaos surging within them. But the previous lightning attack had taken its toll, making their movements sluggish. As \(mainCharacter.name) closed in, the old man, his eyes filled with a mixture of fear and determination, gazed downward and summoned yet another bolt of lightning. The electric force struck \(mainCharacter.name) once more, causing them to scream in agony, frozen in place by the searing pain.
 
 The relentless attack finally halted, and the old man resumed his incoherent rant. Barely conscious and driven by a desperate will to survive, \(mainCharacter.name)'s gaze fell upon a sizable wooden board, conveniently propped against a decaying wall. They seized it, using it as a makeshift shield. The old man, his voice twisted with anger, bellowed, \"JUST DIE,\" and conjured another bolt of lightning. This time, however, the wooden board served as an impromptu shield, granting \(mainCharacter.name) a momentary advantage.
 
 With a burst of strength, they struck down the old man, the impact sending a shockwave through the room. As the old man lay dying, his last breath barely audible, he whispered, \"the… stone.\" Then, as if consumed by an otherworldly fire, he crumbled to ash, leaving only an enigmatic memory. From that day forward, \(mainCharacter.name) always carried a shield, a tangible reminder of the price of curiosity. They departed the house, leaving behind the mysteries that still clung to its decaying walls.
 """)
-
-     let apprehendTheOldMan: Text = Text("""
+    
+    let apprehendTheOldMan: Text = Text("""
 With a heart guided by compassion and curiosity, \(mainCharacter.name) chose not to succumb to violence. They remained on the ground, nursing their wounds, and asked the old man the meaning behind his cryptic words, \"they are wrong.\" The old man's voice, once a torrent of anger, softened into a trembling whisper.
 
 The old man began to share a tale of a kingdom and its people, a kingdom that had once revered magic users, seeking their aid in the prosperity of the land. But a dark twist in history had altered the course of events. He spoke of a previous monarch, who had declared that all magic users were evil, igniting a war that scarred the kingdom's past. \(mainCharacter.name) listened, captivated by the tale, their heart heavy with the weight of newfound knowledge.
@@ -137,16 +132,20 @@ The old man began to share a tale of a kingdom and its people, a kingdom that ha
 
 As the old man's frantic cries subsided, he imparted a final, fragile trust in \(mainCharacter.name). The key to unraveling the Kingdom's dark history lay within their grasp. \(mainCharacter.name) departed from the house, carrying with them the responsibility of a world-altering secret, a mission that could reshape the fate of the kingdom and its people.
 """)
-
-     let conclusion: Text = Text("""
+    
+    let conclusion: Text = Text("""
 Upon returning to the familiarity of their home, \(mainCharacter.name) couldn't contain the exhilaration of the discovery they had made in the abandoned house. Eager to share their findings and revelations, they sought an audience with the king, hoping to shed light on the hidden truths of the kingdom's past. In the midst of their passionate discussion, \(mainCharacter.name)'s voice resonated with fervor, but the king's response was far from what they had expected.
 
 The king, dismissing their account as mere delusion, silenced \(mainCharacter.name)'s claims with stern authority. He ordered them never to speak of the matter again, his words cutting deep into \(mainCharacter.name)'s soul. Doubt began to creep into their thoughts, and they questioned their own experiences. The king's refusal to acknowledge the truth left a void in their heart.
 
 \(mainCharacter.name) yearned for more, for a way to bridge the gap between them and the king. They envisioned the king as a fellow adventurer, a mentor who would join them on quests, sharing knowledge and skills, and experiencing the thrill of the unknown together. Yet, each request was met with a resounding rejection, the king persistently declining to participate in the adventures that had shaped \(mainCharacter.name)'s world.
+
+As dawn painted the sky in hues of gold and lavender, \(mainCharacter.name) ventured back to the village with a heart heavy with curiosity. Upon reaching the site of the mysterious house, their eyes widened in disbelief and shock. Instead of the once-standing structure that held secrets untold, all that remained was a haunting scene – the skeletal remnants of a house, its timeworn walls consumed by relentless flames until there was nothing but ashes dancing in the breeze. The enigma that was the dwelling had been reduced to smoldering ruins, leaving \(mainCharacter.name) to grapple with the mysteries lost in the embers.
 """)
 }
 
-//#Preview {
-//    Chapter2View()
-//}
+struct Chapter2Summary: View{
+    var body: some View{
+        Text("Summary")
+    }
+}
