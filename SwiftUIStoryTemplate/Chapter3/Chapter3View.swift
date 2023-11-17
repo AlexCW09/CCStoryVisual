@@ -76,7 +76,7 @@ struct Chapter3View: View {
 
     let story3 = Chapter3Story()
     
-    @State var intro3: Bool = false
+//    @State var intro3: Bool = false
 
     @State var kingStays: Bool = false
     @State var kingGoes: Bool = false
@@ -96,15 +96,15 @@ struct Chapter3View: View {
     @State var question3: Bool = false
     @State var question4: Bool = false
     
+    @Binding var continueChapter3: Bool
     @Binding var continueChapter4: Bool
     
     //king stays or leaves, // heal the king or not, //  attack the woman or disarm, // chase the boy or not
     
     var body: some View {
         
-        if intro3{
-            ShowStory(textOfStory: whereAtChapter3(.intro), heightOfScroll: 850, chapter: 3, storyBool: $intro3, questionBool: $question1)
-
+        if continueChapter3{
+            ShowStory(textOfStory: story3.intro, heightOfScroll: 850, chapter: 3, storyBool: $continueChapter3, questionBool: $question1)
         }
         if question1{
             OptionView(question: "Do you want the king to accompany you?", option1: "King comes", option2: "King stays", background: "KingStaysOrLeaves", decision1: $kingGoes, decision2: $kingStays, questionBool: $question1)
@@ -122,16 +122,16 @@ struct Chapter3View: View {
             ShowStory(textOfStory: story3.knocksOutMom, heightOfScroll: 1000, chapter: 3, storyBool: $momAlive, questionBool: $kingStayedIntro)
         }
         if kingStayedIntro{
-            ShowStory(textOfStory: story3.kingStayedIntro, heightOfScroll: 1000, chapter: 3, storyBool: $kingStayedIntro, questionBool: $question2)
+            ShowStory(textOfStory: story3.kingStayedIntro, heightOfScroll: 1000, chapter: 3, storyBool: $kingStayedIntro, questionBool: $question3)
         }
         if kingGoes{
-            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
+            ShowStory(textOfStory: story3.acceptsKing, heightOfScroll: 1200, chapter: 3, storyBool: $kingGoes, questionBool: <#T##Binding<Bool>#>)
         }
         if question2{
-            OptionView(question: "Do you want to heal the king?", option1: "Heal the king", option2: "Let the king die", background: <#T##String#>, decision1: <#T##Binding<Bool>#>, decision2: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
+            OptionView(question: "Do you want to heal the king?", option1: "Heal the king", option2: "Let the king die", background: "MirrorBG", decision1: $kingHealed, decision2: $letKingDie, questionBool: $question2)
         }
         if letKingDie{
-            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
+            ShowStory(textOfStory: story3.letKingDie, heightOfScroll: 1200, chapter: 3, storyBool: $letKingDie, questionBool: $kingDiedIntro)
         }
         if kingDiedIntro{
             
@@ -140,16 +140,16 @@ struct Chapter3View: View {
             
         }
         if kingHealed{
-            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
+            ShowStory(textOfStory: story3.healKing, heightOfScroll: 1200, chapter: 3, storyBool: $kingHealed, questionBool: <#T##Binding<Bool>#>)
         }
         if question4{
-            OptionView(question: <#T##String#>, option1: <#T##String#>, option2: <#T##String#>, background: <#T##String#>, decision1: <#T##Binding<Bool>#>, decision2: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
+            OptionView(question: <#T##String#>, option1: <#T##String#>, option2: <#T##String#>, background: "MirrorBG", decision1: <#T##Binding<Bool>#>, decision2: <#T##Binding<Bool>#>, questionBool: $question4)
         }
         if chaseBoy{
-            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
+            ShowStory(textOfStory: story3.chaseBoy, heightOfScroll: 1200, chapter: 3, storyBool: $chaseBoy, questionBool: $continueChapter4)
         }
         if letBoyGo{
-            ShowStory(textOfStory: <#T##Text#>, heightOfScroll: <#T##CGFloat#>, chapter: 3, storyBool: <#T##Binding<Bool>#>, questionBool: <#T##Binding<Bool>#>)
+            ShowStory(textOfStory: story3.letBoyGo, heightOfScroll: 1200, chapter: 3, storyBool: $letBoyGo, questionBool: $continueChapter4)
         }
 //        if !intro3 && !kingStays && !kingGoes && !letKingDie && !kingHealed && !kingDies && !momAlive && !momDead && !kingStayedIntro  && !kingDiedIntro && !kingHealed && !chaseBoy && !letBoyGo && !question1 && !question2 && !question3 && !question4{
 //            Text("Summary")

@@ -118,7 +118,7 @@ struct Chapter4View: View {
             OptionView(question: "Do you want to help the boy?", option1: "Help the boy", option2: "Do not interfere", background: "ruinedHouse", decision1: $helpBoy, decision2: $dontHelpBoy,questionBool: $question1)
         }
         if helpBoy{
-            ShowStory(textOfStory: story4.helpBoy, heightOfScroll: 900, chapter: 4,storyBool: $helpBoy,questionBool: $question2)
+            ShowStory(textOfStory: story4.helpBoy, heightOfScroll: 900, chapter: 4,storyBool: $helpBoy,questionBool: $goodCeremony )
         }
         if dontHelpBoy{
             ShowStory(textOfStory: story4.ignoreBoy, heightOfScroll: 850, chapter: 4,storyBool: $dontHelpBoy,questionBool: $question1)
@@ -127,16 +127,16 @@ struct Chapter4View: View {
             OptionView(question: "Do you want to betray \(mainCharacter.parentalStatus())?", option1: "Betray them", option2: "Stay Calm", background: "ruinedHouse", decision1: $betrayParent, decision2: $calmDown,questionBool: $question2)
         }
         if betrayParent{
-            ShowStory(textOfStory: story4.betrayParent, heightOfScroll: 850, chapter: 4,storyBool: $betrayParent,questionBool: $question1)
+            ShowStory(textOfStory: story4.betrayParent, heightOfScroll: 850, chapter: 4,storyBool: $betrayParent,questionBool: $badCeremony)
         }
         if calmDown{
-            ShowStory(textOfStory: story4.calmDown, heightOfScroll: 1800, chapter: 4,storyBool: $calmDown,questionBool: $question1)
+            ShowStory(textOfStory: story4.calmDown, heightOfScroll: 1800, chapter: 4,storyBool: $calmDown,questionBool: $goodCeremony)
         }
         if goodCeremony{
-            ShowStory(textOfStory: story4.goodCeremony, heightOfScroll: 1800, chapter: 4,storyBool: $goodCeremony,questionBool: $familyLives)
+            ShowStory(textOfStory: story4.goodCeremony+story4.kingdomAttacked, heightOfScroll: 1800, chapter: 4,storyBool: $goodCeremony,questionBool: $familyLives)
         }
         if badCeremony{
-            ShowStory(textOfStory: story4.badCeremony, heightOfScroll: 1800, chapter: 4,storyBool: $badCeremony,questionBool: $familyDies)
+            ShowStory(textOfStory: story4.badCeremony+story4.kingdomAttacked, heightOfScroll: 1800, chapter: 4,storyBool: $badCeremony,questionBool: $familyDies)
         }
 //        if poison{
 //            ShowStory(textOfStory: story4.poison, heightOfScroll: 1800, chapter: 4,storyBool: $poison,questionBool: $question3)

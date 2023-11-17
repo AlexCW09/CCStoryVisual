@@ -52,7 +52,7 @@ struct ContentView: View {
                         }
 //                }
 //                if chapter3 {
-                    Chapter3View(continueChapter4: $chapter4)
+                    Chapter3View(continueChapter3: $chapter3, continueChapter4: $chapter4)
                         .tabItem {
                             Label("Chapter 3", systemImage: "3.circle")
                         }
